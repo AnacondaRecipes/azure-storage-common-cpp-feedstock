@@ -8,6 +8,8 @@ mkdir build
 cd build
 cmake %CMAKE_ARGS% ^
   -G Ninja ^
+  -D CMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
+  -D CMAKE_BUILD_TYPE=Release ^
   -D BUILD_SHARED_LIBS=ON ^
   -D BUILD_TRANSPORT_WINHTTP=ON ^
   ..

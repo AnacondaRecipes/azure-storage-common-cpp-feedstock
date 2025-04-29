@@ -1,5 +1,4 @@
 {% set version = "12.10.0" %}
-{% set sha256 = "84e165267995b8d10060abe1c2b65b3238eccea3f11222b5ae36042a1d1ae07f" %}
 
 package:
   name: azure-storage-common-cpp
@@ -7,7 +6,7 @@ package:
 
 source:
   url: https://github.com/Azure/azure-sdk-for-cpp/archive/refs/tags/azure-storage-common_{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: 84e165267995b8d10060abe1c2b65b3238eccea3f11222b5ae36042a1d1ae07f
 
 build:
   number: 0
@@ -18,14 +17,12 @@ build:
 requirements:
   build:
     - {{ compiler("cxx") }}
-    - {{ stdlib("c") }}
     - cmake
     - ninja
   host:
-    # azure-core-cpp is pinned in conda-forge-pinning-feedstock
-    - azure-core-cpp
-    - libxml2  # [not win]
-    - openssl  # [not win]
+    - azure-core-cpp 1.14
+    - libxml2 {{ libxml2 }}  # [unix]
+    - openssl {{ openssl }}  # [unix]
 
 test:
   requires:

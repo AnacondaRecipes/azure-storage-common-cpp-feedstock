@@ -18,8 +18,9 @@ cd sdk/storage/azure-storage-common
 mkdir build
 cd build
 cmake $CMAKE_ARGS \
-  -D CMAKE_BUILD_TYPE=Release \
   -G Ninja \
+  -D CMAKE_INSTALL_PREFIX="${PREFIX}" \
+  -D CMAKE_BUILD_TYPE=Release \
   -D BUILD_SHARED_LIBS=ON \
   -D BUILD_TRANSPORT_CURL=ON \
   ..
