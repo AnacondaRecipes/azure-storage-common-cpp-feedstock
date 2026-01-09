@@ -7,6 +7,8 @@ package:
 source:
   url: https://github.com/Azure/azure-sdk-for-cpp/archive/refs/tags/azure-storage-common_{{ version }}.tar.gz
   sha256: 456c95bf5c723ae4f84202faa45a0644b8f25b34bced37dce6b6afd854c17936
+  patches:
+    - 0001-remove-private-deps-from-exported-config.patch
 
 build:
   number: 0
