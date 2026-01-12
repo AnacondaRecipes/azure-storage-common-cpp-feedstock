@@ -1,4 +1,4 @@
-{% set version = "12.10.0" %}
+{% set version = "12.11.0" %}
 
 package:
   name: azure-storage-common-cpp
@@ -6,7 +6,9 @@ package:
 
 source:
   url: https://github.com/Azure/azure-sdk-for-cpp/archive/refs/tags/azure-storage-common_{{ version }}.tar.gz
-  sha256: 84e165267995b8d10060abe1c2b65b3238eccea3f11222b5ae36042a1d1ae07f
+  sha256: 456c95bf5c723ae4f84202faa45a0644b8f25b34bced37dce6b6afd854c17936
+  patches:
+    - 0001-remove-private-deps-from-exported-config.patch
 
 build:
   number: 0
@@ -17,10 +19,11 @@ build:
 requirements:
   build:
     - {{ compiler("cxx") }}
+    - {{ stdlib("c") }}
     - cmake
-    - ninja
+    - ninja-base
   host:
-    - azure-core-cpp 1.14
+    - azure-core-cpp 1.16.1
     - libxml2 {{ libxml2 }}  # [unix]
     - openssl {{ openssl }}  # [unix]
 
@@ -39,18 +42,58 @@ test:
 
     # headers
     - test -f ${PREFIX}/include/azure/storage/common/access_conditions.hpp          # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/account_sas_builder.hpp        # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/crypt.hpp                      # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/dll_import_export.hpp          # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/internal/concurrent_transfer.hpp # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/internal/constants.hpp           # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/internal/file_io.hpp             # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/internal/reliable_stream.hpp     # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/internal/shared_key_policy.hpp   # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/internal/storage_bearer_token_auth.hpp # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/internal/storage_bearer_token_authentication_policy.hpp  # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/internal/storage_per_retry_policy.hpp                    # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/internal/storage_service_version_policy.hpp              # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/internal/storage_switch_to_secondary_policy.hpp          # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/internal/xml_wrapper.hpp         # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/rtti.hpp                         # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/storage_common.hpp               # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/storage_credential.hpp           # [unix]
+    - test -f ${PREFIX}/include/azure/storage/common/storage_exception.hpp            # [unix]
     - if not exist %LIBRARY_INC%\azure\storage\common\access_conditions.hpp exit 1  # [win]
-
+    - if not exist %LIBRARY_INC%\azure\storage\common\account_sas_builder.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\crypt.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\dll_import_export.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\internal\concurrent_transfer.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\internal\constants.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\internal\file_io.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\internal\reliable_stream.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\internal\shared_key_policy.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\internal\storage_bearer_token_auth.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\internal\storage_bearer_token_authentication_policy.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\internal\storage_per_retry_policy.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\internal\storage_service_version_policy.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\internal\storage_switch_to_secondary_policy.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\internal\xml_wrapper.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\rtti.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\storage_common.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\storage_credential.hpp exit 1  # [win]
+    - if not exist %LIBRARY_INC%\azure\storage\common\storage_exception.hpp exit 1  # [win]
     # CMake metadata
     - test -f ${PREFIX}/share/azure-storage-common-cpp/azure-storage-common-cppTargets.cmake                     # [unix]
-    - if not exist %LIBRARY_PREFIX%\share\azure-storage-common-cpp\azure-storage-common-cppTargets.cmake exit 1  # [win]
-
+    - test -f ${PREFIX}/share/azure-storage-common-cpp/azure-storage-common-cppConfig.cmake                      # [unix]
+    - test -f ${PREFIX}/share/azure-storage-common-cpp/azure-storage-common-cppConfigVersion.cmake               # [unix]
+    - test -f ${PREFIX}/share/azure-storage-common-cpp/azure-storage-common-cppTargets-release.cmake             # [unix]
+    - if not exist %LIBRARY_PREFIX%\share\azure-storage-common-cpp\azure-storage-common-cppTargets.cmake exit 1         # [win]
+    - if not exist %LIBRARY_PREFIX%\share\azure-storage-common-cpp\azure-storage-common-cppConfig.cmake exit 1          # [win]
+    - if not exist %LIBRARY_PREFIX%\share\azure-storage-common-cpp\azure-storage-common-cppConfigVersion.cmake exit 1   # [win]
+    - if not exist %LIBRARY_PREFIX%\share\azure-storage-common-cpp\azure-storage-common-cppTargets-release.cmake exit 1 # [win]
     # CMake find_package()
     - cmake $CMAKE_ARGS -G Ninja -S $RECIPE_DIR -B test-find-package    # [unix]
     - cmake %CMAKE_ARGS% -G Ninja -S %RECIPE_DIR% -B test-find-package  # [win]
 
 about:
-  home: https://github.com/Azure/azure-sdk-for-cpp/
+  home: https://github.com/Azure/azure-sdk-for-cpp
   summary: Azure Storage Common Client Library for C++
   description: >-
     Azure Storage is a Microsoft-managed service providing cloud storage that is highly available, secure, durable, scalable, and redundant. Azure Storage includes Azure Blobs (objects), Azure Data Lake Storage Gen2, Azure Files, and Azure Queues. The Azure Storage Common library provides infrastructure shared by the other
@@ -60,8 +103,8 @@ about:
   license_file:
     - LICENSE.txt
     - sdk/storage/azure-storage-common/NOTICE.txt
-  doc_url: https://azure.github.io/azure-sdk-for-cpp/
-  dev_url: https://github.com/Azure/azure-sdk-for-cpp/tree/main/sdk/storage/azure-storage-common/
+  doc_url: https://azure.github.io/azure-sdk-for-cpp
+  dev_url: https://github.com/Azure/azure-sdk-for-cpp/tree/main/sdk/storage/azure-storage-common
 
 extra:
   recipe-maintainers:

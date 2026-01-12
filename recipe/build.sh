@@ -6,12 +6,6 @@ set -eux
 # https://github.com/search?utf8=%E2%9C%93&q=AZURE_SDK_DISABLE_AUTO_VCPKG&type=code
 export AZURE_SDK_DISABLE_AUTO_VCPKG=ON
 
-# https://conda-forge.org/docs/maintainer/knowledge_base.html#newer-c-features-with-old-sdk
-if [[ "${target_platform}" == osx-* ]]
-then
-  CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
-fi
-
 cd sdk/storage/azure-storage-common
 
 # https://github.com/Azure/azure-sdk-for-cpp/blob/main/CONTRIBUTING.md#building-the-project
