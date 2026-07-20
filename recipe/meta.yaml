@@ -1,17 +1,18 @@
 {% set version = "12.11.0" %}
+{% set name = "azure-storage-common" %}
 
 package:
-  name: azure-storage-common-cpp
+  name: {{ name }}-cpp
   version: {{ version }}
 
 source:
-  url: https://github.com/Azure/azure-sdk-for-cpp/archive/refs/tags/azure-storage-common_{{ version }}.tar.gz
+  url: https://github.com/Azure/azure-sdk-for-cpp/archive/refs/tags/{{ name }}_{{ version }}.tar.gz
   sha256: 456c95bf5c723ae4f84202faa45a0644b8f25b34bced37dce6b6afd854c17936
   patches:
     - 0001-remove-private-deps-from-exported-config.patch
 
 build:
-  number: 1
+  number: 2
   run_exports:
     - {{ pin_subpackage("azure-storage-common-cpp", max_pin="x.x.x") }}
 

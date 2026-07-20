@@ -1,2 +1,6 @@
 libxml2:
-  - 2.14.4
+  - 2.15.3
+c_compiler_version:
+  - "22"
+cxx_compiler_version:
+  - "22"
