@@ -24,7 +24,7 @@ requirements:
     - cmake
     - ninja-base
   host:
-    - azure-core-cpp 1.16.1
+    - azure-core-cpp 1.16.3
     - libxml2 {{ libxml2 }}  # [unix]
     - openssl {{ openssl }}  # [unix]
 
