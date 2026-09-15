@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/Azure/azure-sdk-for-cpp/archive/refs/tags/{{ name }}_{{ version }}.tar.gz
-  sha256: 456c95bf5c723ae4f84202faa45a0644b8f25b34bced37dce6b6afd854c17936
+  sha256: 68b3d88d5f1358b3607b4fb76674373c91e1dd840920de05e5a82cf09fcc6e5b
   patches:
     - 0001-remove-private-deps-from-exported-config.patch
 
