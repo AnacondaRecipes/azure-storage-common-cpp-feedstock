@@ -12,7 +12,7 @@ source:
     - 0001-remove-private-deps-from-exported-config.patch
 
 build:
-  number: 0
+  number: 1
   run_exports:
     - {{ pin_subpackage("azure-storage-common-cpp", max_pin="x.x.x") }}
 
@@ -24,7 +24,7 @@ requirements:
     - cmake
     - ninja-base
   host:
-    - azure-core-cpp 1.16.3
+    - azure-core-cpp {{ azure_core_cpp }}
     - libxml2 {{ libxml2 }}  # [unix]
     - openssl {{ openssl }}  # [unix]
 
