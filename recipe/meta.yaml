@@ -24,6 +24,7 @@ requirements:
     - cmake
     - ninja-base
   host:
+    # make pinning to conda_build_config.yaml once `core` would be update there
     - azure-core-cpp >=1.16.4
     - libxml2 {{ libxml2 }}  # [unix]
     - openssl {{ openssl }}  # [unix]
